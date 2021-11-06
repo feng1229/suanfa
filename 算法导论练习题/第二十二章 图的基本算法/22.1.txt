@@ -1,0 +1,149 @@
+22.1-1：邻接链表中，找出结点的入度要遍历整个邻接链表，故时间复杂度为V+E。而出度只需遍历那个结点的链表，故时间复杂度为变数。
+
+22.1-2：
+struct V{
+	struct V *next;
+	int val;
+};
+struct V**(int **a,int n){//n为结点数 
+    struct V **w=(struct V**)malloc(sizeof(struct V*)*(n+1));
+	for(int i=1,i<=n;++i){
+		w[i]=NULL;
+		for(int j=1;j<=n;++j){
+			if(a[i][j]){
+				struct V *q=(struct V*)malloc(sizeof(struct V));
+				q->val=a[i][j];
+				q->next=w[i];
+				w[i]=q;
+			}
+		}
+	} 
+	return w;
+}
+
+22.1-3：
+int ** jzzz(int **a,int n){//矩阵转置 
+    int **q=(int **)malloc(sizeof(int *)*(n+1));
+    for(int i=0;i<=n;++i)q[i]=(int *)malloc(sizeof(int)*(n+1));
+	for(int i=0;i<=n;++n){
+		for(int j=0;j<=n;++n){
+			q[j][i]=a[i][j];
+		}
+	}
+	return q;
+}///////////矩阵转置，时间复杂度为n的平方
+struct V{
+	struct V *next;
+	int val;
+};
+struct V** ljbzz(struct V** a,int n){//邻接链表转置 
+	struct V**q=(struct V**)malloc(sizeof(struct V*)*(n+1));
+	memset(q,0,sizeof(struct V*)*(n+1));
+	for(int i=1;i<=n;++i){
+		struct V* w=a[i];
+		while(w){
+			struct V* z=(struct V*)malloc(sizeof(struct V));
+			z->val=i;
+			z->next=q[w->val];
+			q[w->val]=z;
+			w=w->next;
+		}
+	}
+	return q;
+}//////邻接链表转置，时间复杂度为V+E
+
+22.1-4：多图消除沉余
+struct V{
+	struct V *next;
+	int val;
+}; 
+struct V** duotu(struct V **q,int n){
+	int *a=(int *)malloc(sizeof(int)*(n+1));
+	struct V **z=(struct V**)malloc(sizeof(struct V*)*(n+1));
+	memset(z,0,sizeof(struct V*)*(n+1));
+	memset(a,0,sizeof(int)*(n+1));
+	for(int i=1;i<=n;++i){
+		a[i]=i;
+		struct V *w=q[i];
+		while(w){
+			if(w->val!=i){
+				struct V *e=(struct V*)malloc(sizeof(struct V));
+				e->val=w->val;
+				e->next=z[w->val];
+				z[w->val]=e;
+				a[w->val]=i;
+			}
+			w=w->next;
+		}
+	}
+	free(a);
+	return z;
+}
+
+22.1-5：计算平方图
+struct V {
+	struct V *next;
+	int val;
+};
+struct V** ljpf(struct V **a,int n) {//邻接链表求平方，时间复杂度上届为E*E                                                                                                                                                               
+	struct V **q=(struct V**)malloc(sizeof(struct V*)*(n+1));
+	memset(q,0,sizeof(struct V*)*(n+1));
+	int *z=(int *)malloc(sizeof(int)*(n+1));
+	memset(z,0,sizeof(int)*(n+1));
+	foe(int i=1; i<=n; ++i) {
+		struct V *w=a[i];
+		z[i]=i;
+		while(w) {
+			struct V *e=a[w->val];
+			while(e) {
+				if(z[e->val]!=i) {
+					struct V *r=(struct V*)malloc(sizeof(struct V));
+					r->val=e->val;
+					r->next=q[i];
+					q[i]=r;
+				}
+				z[e->val]=i;
+				e=e->next;
+			}
+			w=w->next;
+		}
+	}
+	free(z);
+	return q;
+}
+
+int **jzpf(int **a,int n){//矩阵平方，时间复杂度为V*V*V。 
+	int **q=(int **)malloc(sizeof(int *)*(n+1));
+	for(int i=0;i<=n;++i){
+		q[i]=(int *)malloc(sizeof(int)*(n+1));
+		memset(&q[i],0,sizeof(int)*(n+1));
+	}
+	for(int i=1;i<=n;++i){
+		for(int j=1;j<=n;++j){
+			if(a[i][j]){
+				for(int k=1;k<=n;++k){
+					if(a[j][k]) q[i][k]=1;
+				}
+			}
+		}
+	}
+	return q;
+} 
+
+22.1-6：矩阵判断通用汇点，入度为V-1，出度为0
+int tohd(int **a,int n){//时间复杂度为n 
+	int i=1,j=1;
+	while(i<=n&&j<=n){
+		if(a[i][j]) ++i;
+		else ++j;
+	}
+	if(a[i][j])return -1;
+	int n1=0,n2=0;
+	for(int k=1;k<=n;++k){
+		n1+=a[i][k];
+		n2+=a[k][i];
+	}
+	if(n1==0&&n2==(n-1))return i;
+	return -1;
+}
+22.1-7：当i=j是，其值我入度和出度相加。不等时，其值的绝对值为互连的边数。
